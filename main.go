@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"example.com/structs-practice/note"
+	"example.com/structs-practice/report"
 	"example.com/structs-practice/todo"
 	"fmt"
 	"os"
@@ -28,24 +29,20 @@ func main() {
 	}
 
 	todoData.Display()
-
 	// store the note into a file
-	err = todoData.Save()
+	// using interface
+	err = saveData(todoData)
 	if err != nil {
-		fmt.Println("Saving the todo failed.")
 		return
 	}
-	fmt.Println("Saving the todo succeeded!")
 
 	userNote.Display()
-
 	// store the note into a file
-	err = userNote.Save()
+	// using interface
+	err = saveData(userNote)
 	if err != nil {
-		fmt.Println("Saving the note failed.")
 		return
 	}
-	fmt.Println("Saving the note succeeded!")
 }
 
 func getNoteData() (string, string) {
@@ -63,4 +60,14 @@ func getUserInput(prompt string) string {
 	}
 	userInput = strings.TrimSuffix(userInput, "\n")
 	return strings.TrimSuffix(userInput, "\r")
+}
+
+func saveData(data report.Saver) error {
+	err := data.Save()
+	if err != nil {
+		fmt.Println("saving failed")
+		return err
+	}
+	fmt.Println("Saving succeeded!")
+	return nil
 }
