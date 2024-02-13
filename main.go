@@ -24,9 +24,10 @@ func main() {
 	// store the note into a file
 	err = userNote.Save()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Saving the note failed.")
 		return
 	}
+	fmt.Println("Saving the note succeeded!")
 }
 
 func getNoteData() (string, string) {
