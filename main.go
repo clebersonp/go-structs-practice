@@ -19,8 +19,14 @@ func main() {
 		return
 	}
 
-	// store the note into a file
 	userNote.Display()
+
+	// store the note into a file
+	err = userNote.Save()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 }
 
 func getNoteData() (string, string) {
