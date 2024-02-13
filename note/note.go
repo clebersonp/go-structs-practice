@@ -1,6 +1,7 @@
 package note
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -9,23 +10,28 @@ import (
 )
 
 // Note struct
+// `json:"title"` are called 'struct tags' - Metadata and golang feature
 type Note struct {
-	title     string
-	content   string
-	createdAt time.Time
+	Title     string    `json:"title"`
+	Content   string    `json:"content"`
+	CreatedAt time.Time `json:"created_at"`
 }
 
 // Display - method with receiver of note struct type
 func (n Note) Display() {
-	fmt.Printf("Your note titled %v has the following content:\n\n%v\n\n", n.title, n.content)
+	fmt.Printf("Your note titled %v has the following content:\n\n%v\n\n", n.Title, n.Content)
 }
 
 func (n Note) Save() error {
-	fileName := strings.ReplaceAll(n.title, " ", "_")
+	fileName := strings.ReplaceAll(n.Title, " ", "_")
 	fileName = strings.ToLower(fileName)
 	fileName += ".json"
-	data := fmt.Sprintf("{ \"title\": \"%v\", \"content\": \"%v\", \"createdAt\": \"%v\" }", n.title, n.content, n.createdAt)
-	return os.WriteFile(fileName, []byte(data), 0644)
+	// Marshal needs to upper case all field struct that will be saved into json format
+	jsonData, err := json.Marshal(n)
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(fileName, jsonData, 0644)
 }
 
 // New constructor function
@@ -35,8 +41,8 @@ func New(title, content string) (Note, error) {
 		return Note{}, errors.New("invalid input")
 	}
 	return Note{
-		title:     title,
-		content:   content,
-		createdAt: time.Now(),
+		Title:     title,
+		Content:   content,
+		CreatedAt: time.Now(),
 	}, nil
 }
