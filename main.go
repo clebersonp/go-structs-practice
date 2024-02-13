@@ -41,11 +41,18 @@ func main() {
 	}
 
 	fmt.Println("---------------------------")
-	printSomething(1)
-	printSomething(5.2)
-	printSomething("text")
-	printSomething(todoData)
-	printSomething(userNote)
+	printSomethingSwitchCase(1)
+	printSomethingSwitchCase(5.2)
+	printSomethingSwitchCase("text")
+	printSomethingSwitchCase(todoData)
+	printSomethingSwitchCase(userNote)
+
+	fmt.Println("---------------------------")
+	printSomethingAnotherSyntax(1)
+	printSomethingAnotherSyntax(5.2)
+	printSomethingAnotherSyntax("text")
+	printSomethingAnotherSyntax(todoData)
+	printSomethingAnotherSyntax(userNote)
 }
 
 func getNoteData() (string, string) {
@@ -82,10 +89,10 @@ func saveData(data report.Saver) error {
 	return nil
 }
 
-// printSomething to explaining use of interface{} or just its alias 'any'
+// printSomethingSwitchCase to explaining use of interface{} or just its alias 'any'
 // type any = interface{}
 // any type is allowed when using 'any' or 'interface{}' type
-func printSomething(value interface{}) {
+func printSomethingSwitchCase(value interface{}) {
 	switch value.(type) {
 	case int:
 		fmt.Println("Integer:", value)
@@ -97,5 +104,33 @@ func printSomething(value interface{}) {
 		fmt.Println("todo.Todo:", value)
 	case note.Note:
 		fmt.Println("note.Note:", value)
+	}
+}
+
+// printSomethingAnotherSyntax instead using switch type
+func printSomethingAnotherSyntax(value any) {
+	intVal, ok := value.(int)
+	if ok {
+		fmt.Println("Integer:", intVal)
+	}
+
+	floatVal, ok := value.(float64)
+	if ok {
+		fmt.Println("Float64", floatVal)
+	}
+
+	stringVal, ok := value.(string)
+	if ok {
+		fmt.Println("string:", stringVal)
+	}
+
+	todoVal, ok := value.(todo.Todo)
+	if ok {
+		fmt.Println("todo.Todo:", todoVal)
+	}
+
+	noteVal, ok := value.(note.Note)
+	if ok {
+		fmt.Println("note.Note:", noteVal)
 	}
 }
