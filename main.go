@@ -28,18 +28,14 @@ func main() {
 		return
 	}
 
-	todoData.Display()
-	// store the note into a file
-	// using interface
-	err = saveData(todoData)
+	// todoData
+	err = outputData(todoData)
 	if err != nil {
 		return
 	}
 
-	userNote.Display()
-	// store the note into a file
-	// using interface
-	err = saveData(userNote)
+	// userNote
+	err = outputData(userNote)
 	if err != nil {
 		return
 	}
@@ -60,6 +56,13 @@ func getUserInput(prompt string) string {
 	}
 	userInput = strings.TrimSuffix(userInput, "\n")
 	return strings.TrimSuffix(userInput, "\r")
+}
+
+func outputData(data report.Outputtable) error {
+	data.Display()
+	// store the note into a file
+	// using interface
+	return saveData(data)
 }
 
 func saveData(data report.Saver) error {
