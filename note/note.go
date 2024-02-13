@@ -2,6 +2,7 @@ package note
 
 import (
 	"errors"
+	"fmt"
 	"time"
 )
 
@@ -10,6 +11,11 @@ type Note struct {
 	title     string
 	content   string
 	createdAt time.Time
+}
+
+// Display - method with receiver of note struct type
+func (n Note) Display() {
+	fmt.Printf("Your n titled %v has the following content:\n%v\n", n.title, n.content)
 }
 
 // New constructor function

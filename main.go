@@ -17,7 +17,7 @@ func main() {
 	}
 
 	// store the note into a file
-	fmt.Println(userNote)
+	userNote.Display()
 }
 
 func getNoteData() (string, string) {
