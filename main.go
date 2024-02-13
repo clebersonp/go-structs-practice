@@ -53,6 +53,22 @@ func main() {
 	printSomethingAnotherSyntax("text")
 	printSomethingAnotherSyntax(todoData)
 	printSomethingAnotherSyntax(userNote)
+
+	fmt.Println("------------GENERICS---------------")
+	var resultAny any = add(1, 2)
+	fmt.Printf("Result type: %T\n", resultAny)
+	resultAny = add(1.0, 2.0)
+	fmt.Printf("Result type: %T\n", resultAny)
+	resultAny = add("1", "2")
+	fmt.Printf("Result type: %T\n", resultAny)
+
+	var resultInt int = addWithGenerics(1, 2)
+	fmt.Printf("Result type: %T\n", resultInt)
+	var resultFloat float64 = addWithGenerics(1.0, 2.0)
+	fmt.Printf("Result type: %T\n", resultFloat)
+	var resultString string = addWithGenerics("1", "2")
+	fmt.Printf("Result type: %T\n", resultString)
+
 }
 
 func getNoteData() (string, string) {
@@ -133,4 +149,36 @@ func printSomethingAnotherSyntax(value any) {
 	if ok {
 		fmt.Println("note.Note:", noteVal)
 	}
+}
+
+// add - without generics. Accept any and return any type. It needs to check every operation
+func add(a, b any) any {
+	// int type
+	aInt, aIsInt := a.(int)
+	bInt, bIsInt := b.(int)
+	if aIsInt && bIsInt {
+		return aInt + bInt
+	}
+
+	// float type
+	aFloat, aIsFloat := a.(float64)
+	bFloat, bIsFloat := b.(float64)
+	if aIsFloat && bIsFloat {
+		return aFloat + bFloat
+	}
+
+	// string type
+	aString, aIsString := a.(string)
+	bString, bIsString := b.(string)
+	if aIsString && bIsString {
+		return aString + bString
+	}
+
+	// otherwise
+	return nil
+}
+
+// addWithGenerics - Accepted generics and range of type that is acceptable like: int, float64 and string etc...
+func addWithGenerics[T int | float64 | string](a, b T) T {
+	return a + b
 }
