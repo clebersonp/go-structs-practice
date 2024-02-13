@@ -39,6 +39,10 @@ func main() {
 	if err != nil {
 		return
 	}
+
+	fmt.Println("---------------------------")
+	printSomething(todoData)
+	printSomething(userNote)
 }
 
 func getNoteData() (string, string) {
@@ -73,4 +77,11 @@ func saveData(data report.Saver) error {
 	}
 	fmt.Println("Saving succeeded!")
 	return nil
+}
+
+// printSomething to explaining use of interface{} or just its alias 'any'
+// type any = interface{}
+// any type is allowed when using 'any' or 'interface{}' type
+func printSomething(value interface{}) {
+	fmt.Println(value)
 }
