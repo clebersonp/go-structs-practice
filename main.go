@@ -41,6 +41,9 @@ func main() {
 	}
 
 	fmt.Println("---------------------------")
+	printSomething(1)
+	printSomething(5.2)
+	printSomething("text")
 	printSomething(todoData)
 	printSomething(userNote)
 }
@@ -83,5 +86,16 @@ func saveData(data report.Saver) error {
 // type any = interface{}
 // any type is allowed when using 'any' or 'interface{}' type
 func printSomething(value interface{}) {
-	fmt.Println(value)
+	switch value.(type) {
+	case int:
+		fmt.Println("Integer:", value)
+	case float64:
+		fmt.Println("Float64", value)
+	case string:
+		fmt.Println("string:", value)
+	case todo.Todo:
+		fmt.Println("todo.Todo:", value)
+	case note.Note:
+		fmt.Println("note.Note:", value)
+	}
 }
