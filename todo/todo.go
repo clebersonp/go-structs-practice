@@ -18,6 +18,8 @@ func (t Todo) Display() {
 	fmt.Println(t.Text)
 }
 
+// Save - in Go we don't need to specify that some structs uses or implements an interface directly.
+// We just need follow the same signature and Go automatically implement it
 func (t Todo) Save() error {
 	fileName := "todo.json"
 	// Marshal needs to upper case all field struct that will be saved into json format

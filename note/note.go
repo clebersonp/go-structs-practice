@@ -22,6 +22,8 @@ func (n Note) Display() {
 	fmt.Printf("Your note titled %v has the following content:\n\n%v\n\n", n.Title, n.Content)
 }
 
+// Save - in Go we don't need to specify that some structs uses or implements an interface directly.
+// We just need follow the same signature and Go automatically implement it
 func (n Note) Save() error {
 	fileName := strings.ReplaceAll(n.Title, " ", "_")
 	fileName = strings.ToLower(fileName)
