@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"example.com/structs-practice/note"
+	"example.com/structs-practice/todo"
 	"fmt"
 	"os"
 	"strings"
@@ -12,12 +13,29 @@ func main() {
 	// ask user for the data
 	title, content := getNoteData()
 
+	todoText := getUserInput("Todo text: ")
+	todoData, err := todo.New(todoText)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
 	// store in a note structure
 	userNote, err := note.New(title, content)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
+
+	todoData.Display()
+
+	// store the note into a file
+	err = todoData.Save()
+	if err != nil {
+		fmt.Println("Saving the todo failed.")
+		return
+	}
+	fmt.Println("Saving the todo succeeded!")
 
 	userNote.Display()
 
